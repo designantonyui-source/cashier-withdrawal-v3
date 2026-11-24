@@ -1,0 +1,305 @@
+/*
+ * Cashier design system
+ * Derived from the Phantom iOS "Adding funds" flow.
+ *
+ * The system is scoped to `.cashier-ds` so the existing cashier keeps its
+ * current theme until it is deliberately migrated.
+ */
+
+/* Breakpoints — single source for widget responsive behavior.
+   The cashier widget is 400px max; its only meaningful breakpoint is 560px (mobile 375 / desktop 560)
+   where it switches from full-bleed mobile (h-svh, no radius) to a centered
+   card (h-780 + 32px radius) via Tailwind sm:. mobile 375 / desktop 560 per Figma Cashier / Breakpoints.
+   Figma source: Cashier / Breakpoints (mobile 375, desktop 560). */
+@theme inline {
+  --breakpoint-mobile: 375px;
+  --breakpoint-sm: 560px;
+  --breakpoint-desktop: 560px;
+}
+
+@theme inline {
+  --font-display: "Inter Variable", sans-serif;
+
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-pressed: var(--accent-pressed);
+  --color-accent-soft: var(--accent-soft);
+  --color-danger: var(--danger);
+  --color-danger-surface: var(--danger-surface);
+  --color-text-tertiary: var(--text-tertiary);
+
+  --radius-card: 20px;
+  --radius-control: 20px;
+  --radius-sheet: 24px;
+}
+
+.cashier-ds,
+.dark.cashier-ds,
+.dark .cashier-ds {
+  color-scheme: dark;
+
+  /* Base — Electric Violet: navy-black canvas with cool-tinted surfaces */
+  --background: #0a0a14;
+  --foreground: #f0f0fa;
+  --card: #14141f;
+  --card-foreground: #f0f0fa;
+  --popover: #1e1e2e;
+  --popover-foreground: #f0f0fa;
+
+  /* Surfaces — blue-violet undertones give depth and hierarchy */
+  --surface-1: #14141f;
+  --surface-2: #1e1e2e;
+  --surface-3: #2a2a3e;
+  --hairline: rgb(180 180 255 / 0.08);
+  --hairline-strong: rgb(180 180 255 / 0.14);
+
+  /* Text */
+  --muted-foreground: #9b9bb4;
+  --text-tertiary: #6e6e8a;
+
+  /* Action — electric violet accent + Figma button tokens */
+  --primary: #8b5cf6;
+  --primary-foreground: #ffffff;
+  --accent-hover: #a78bfa;
+  --accent-pressed: #7c3aed;
+  --accent-soft: rgb(139 92 246 / 0.18);
+  --accent: var(--surface-2);
+  --accent-foreground: var(--foreground);
+
+  /* Button tokens (Brand electric violet AA 5.7:1) */
+  --button-bg-primary: #7c3aed;
+  --button-bg-primary-hover: #8b5cf6;
+  --button-text-primary: #ffffff;
+  --button-bg-secondary: #2e2f33;
+  --button-bg-secondary-hover: #393b40;
+  --button-text-secondary: rgb(255 255 255 / 0.88);
+  --button-bg-disabled: #2e2f33;
+
+  /* Supporting shadcn tokens */
+  --secondary: var(--surface-2);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--surface-2);
+  --border: var(--hairline);
+  --input: var(--hairline-strong);
+  --ring: #8b5cf6;
+
+  /* Status */
+  --success: #34d399;
+  --fee-free: #34d399;
+  --success-surface: rgb(52 211 153 / 0.14);
+  --warning: #fbbf24;
+  --warning-surface: rgb(251 191 36 / 0.14);
+  --destructive: #fb7185;
+  --danger: #fb7185;
+  --danger-surface: rgb(251 113 133 / 0.14);
+  --error-surface: var(--danger-surface);
+
+  --radius: 1rem;
+  --header-btn-bg: rgb(255 255 255 / 0.08);
+  --header-btn-bg-hover: rgb(255 255 255 / 0.14);
+  --surface-glow: radial-gradient(115% 260px at 50% -16px, rgb(139 92 246 / 0.24) 0%, rgb(124 58 237 / 0.08) 52%, transparent 100%);
+  --surface-shadow: 0 40px 100px -32px rgb(0 0 0 / 0.9);
+  --shadow-soft: 0 2px 5px 0 rgb(33 34 36 / 0.17);
+  --shadow-medium: 0 8px 24px -6px rgb(33 34 36 / 0.22);
+
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgb(139 92 246 / 0.08) 0%, transparent 60%),
+    var(--background);
+  color: var(--foreground);
+  font-family: "Inter Variable", "Inter", system-ui, sans-serif;
+}
+
+.cashier-ds ::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.cashier-ds input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.cashier-paper {
+  color-scheme: light;
+
+  /* Base — white canvas, light gray surfaces, violet primary kept from dark */
+  --background: #ffffff;
+  --foreground: #0d0d14;
+  --card: #f5f7f9;
+  --card-foreground: #0d0d14;
+  --popover: #ffffff;
+  --popover-foreground: #0d0d14;
+
+  /* Surfaces */
+  --surface-1: #ffffff;
+  --surface-2: #f5f7f9;
+  --surface-3: #e9edf1;
+  --hairline: rgb(13 13 20 / 0.08);
+  --hairline-strong: rgb(13 13 20 / 0.16);
+
+  /* Text */
+  --muted-foreground: #5c6470;
+  --text-tertiary: #8a919c;
+
+  /* Action — electric violet accent + Figma Light button tokens */
+  --primary: #8b5cf6;
+  --primary-foreground: #ffffff;
+  --accent-hover: #7c3aed;
+  --accent-pressed: #6d28d9;
+  --accent-soft: rgb(139 92 246 / 0.12);
+  --accent: var(--surface-2);
+  --accent-foreground: var(--foreground);
+
+  /* Button tokens (Brand electric violet AA 5.7:1) */
+  --button-bg-primary: #7c3aed;
+  --button-bg-primary-hover: #6d28d9;
+  --button-text-primary: #ffffff;
+  --button-bg-secondary: #edeff2;
+  --button-bg-secondary-hover: #f5f7f9;
+  --button-text-secondary: rgb(0 0 0 / 0.86);
+  --button-bg-disabled: #f5f7f9;
+
+  /* Supporting shadcn tokens */
+  --secondary: var(--surface-2);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--surface-2);
+  --border: var(--hairline);
+  --input: var(--hairline-strong);
+  --ring: #8b5cf6;
+
+  /* Status — AA-safe on white */
+  --success: #067647;
+  --fee-free: #059669;
+  --success-surface: rgb(6 118 71 / 0.12);
+  --warning: #b54708;
+  --warning-surface: rgb(181 71 8 / 0.12);
+  --destructive: #b42318;
+  --danger: #b42318;
+  --danger-surface: rgb(180 35 24 / 0.12);
+  --error-surface: var(--danger-surface);
+
+  --radius: 1rem;
+  --header-btn-bg: rgb(255 255 255 / 0.8);
+  --header-btn-bg-hover: rgb(255 255 255 / 0.96);
+  --surface-glow: radial-gradient(115% 250px at 50% -16px, rgb(124 58 237 / 0.13) 0%, rgb(139 92 246 / 0.05) 52%, transparent 100%);
+  --surface-shadow: 0 24px 64px -24px rgb(13 13 20 / 0.18);
+  --shadow-soft: 0 2px 5px 0 rgb(33 34 36 / 0.17);
+  --shadow-medium: 0 4px 16px -4px rgb(13 13 20 / 0.08);
+
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgb(139 92 246 / 0.05) 0%, transparent 60%),
+    var(--background);
+  color: var(--foreground);
+  font-family: "Inter Variable", "Inter", system-ui, sans-serif;
+}
+
+.cashier-paper ::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.cashier-paper input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.cashier-ds *,
+.cashier-paper * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--hairline-strong) transparent;
+}
+
+.cashier-ds *::-webkit-scrollbar,
+.cashier-paper *::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.cashier-ds *::-webkit-scrollbar-track,
+.cashier-paper *::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cashier-ds *::-webkit-scrollbar-thumb,
+.cashier-paper *::-webkit-scrollbar-thumb {
+  background: var(--hairline-strong);
+  border-radius: 9999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cashier-paper *,
+  .cashier-paper *::before,
+  .cashier-paper *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cashier-ds *,
+  .cashier-ds *::before,
+  .cashier-ds *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes cashier-push-in {
+  from {
+    opacity: 0.45;
+    transform: translateX(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes cashier-pop-in {
+  from {
+    opacity: 0.5;
+    transform: translateX(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.cashier-push {
+  animation: cashier-push-in 210ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.cashier-pop {
+  animation: cashier-pop-in 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Grouped list styling with full-width row dividers */
+.method-inset-group > button,
+.method-inset-group > div {
+  border-radius: 0;
+  background: transparent;
+}
+
+.method-inset-group > button + button,
+.method-inset-group > div + div {
+  position: relative;
+}
+
+.method-inset-group > button + button::before,
+.method-inset-group > div + div::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: var(--hairline);
+  pointer-events: none;
+}

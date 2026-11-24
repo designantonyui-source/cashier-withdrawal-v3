@@ -1,0 +1,44 @@
+<svg width="48" height="32" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="pl-id-bg" x1="0" y1="16" x2="48" y2="16" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#D4E7F8"/>
+      <stop offset="48%" stop-color="#FCE7EF"/>
+      <stop offset="100%" stop-color="#CFE5F8"/>
+    </linearGradient>
+    <clipPath id="pl-id-clip">
+      <rect x="0.5" y="0.5" width="47" height="31" rx="3"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#pl-id-clip)">
+    <rect x="0.5" y="0.5" width="47" height="31" rx="3" fill="url(#pl-id-bg)"/>
+    <!-- Subtle white curved security ribbon -->
+    <path d="M27.5 11.5C32.5 16 32.5 23.5 26 29.5" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="4.5" stroke-linecap="round"/>
+    <!-- Polish coat of arms shield (top-left) -->
+    <path d="M3 3h5v4.1c0 1.4-2.5 2.4-2.5 2.4S3 8.5 3 7.1V3Z" fill="#DC2626"/>
+    <path d="M5.5 3.9l.55.5c.45-.1.95.15 1.15.6-.3.3-.65.45-1 .45.3.2.5.6.4 1-.4.05-.75-.15-1.1-.4-.35.25-.7.45-1.1.4-.1-.4.1-.8.4-1-.35 0-.7-.15-1-.45.2-.45.7-.7 1.15-.6L5.5 3.9Z" fill="#FFFFFF"/>
+    <!-- Header text lines & divider -->
+    <rect x="9.8" y="3.5" width="22.5" height="1.5" rx="0.75" fill="#1F2937"/>
+    <rect x="9.8" y="6.1" width="17.5" height="1.4" rx="0.7" fill="#374151"/>
+    <path d="M9.8 9.1H34" stroke="#9CA3AF" stroke-width="0.6"/>
+    <!-- EU flag badge (top-right) -->
+    <rect x="36.5" y="3" width="8.5" height="5.6" rx="0.6" fill="#003399"/>
+    <circle cx="40.75" cy="5.8" r="1.65" stroke="#FACC15" stroke-width="0.75" stroke-dasharray="0.5 0.65"/>
+    <!-- White photo frame with grey silhouette (bottom-left) -->
+    <rect x="3" y="10.8" width="13.5" height="17.6" rx="1" fill="#FFFFFF"/>
+    <circle cx="9.75" cy="17.2" r="2.8" fill="#B6BAC2"/>
+    <path d="M4.3 27.6c.45-3.4 2.55-5 5.45-5s5 1.6 5.45 5H4.3Z" fill="#7D828A"/>
+    <!-- Clean grey data bars -->
+    <rect x="19" y="11.5" width="10" height="1.15" rx="0.57" fill="#9CA3AF"/>
+    <rect x="19" y="13.5" width="8.5" height="1.25" rx="0.62" fill="#9CA3AF"/>
+    <rect x="19" y="16.2" width="11" height="1.15" rx="0.57" fill="#9CA3AF"/>
+    <rect x="19" y="18.2" width="8.2" height="1.25" rx="0.62" fill="#9CA3AF"/>
+    <rect x="19" y="20.9" width="12.5" height="1.15" rx="0.57" fill="#9CA3AF"/>
+    <rect x="19" y="22.9" width="10" height="1.25" rx="0.62" fill="#9CA3AF"/>
+    <rect x="19" y="25.6" width="15" height="1.15" rx="0.57" fill="#9CA3AF"/>
+    <rect x="19" y="27.4" width="6" height="1.15" rx="0.57" fill="#9CA3AF"/>
+    <rect x="30.5" y="27.4" width="5.5" height="1.15" rx="0.57" fill="#9CA3AF"/>
+    <!-- Right neutral square chip -->
+    <rect x="38" y="19.8" width="7" height="8.5" rx="1.1" fill="#D1D5DB"/>
+  </g>
+  <rect x="0.5" y="0.5" width="47" height="31" rx="3" stroke="#0F172A" stroke-opacity="0.12" stroke-width="0.9"/>
+</svg>

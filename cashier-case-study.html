@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f0f0e">
+<title>Cashier — Polish-Licensed iGaming Deposit & Withdrawal | Anton Bozhatarnyk</title>
+<meta name="description" content="Case study: an iGaming cashier built for the Polish-licensed (Ustawa hazardowa) market — 0% fee PLN rails, BLIK 2:00 timer & 1-Click, KYC/PESEL gate, Express Elixir payouts, React + Figma Design System.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300..800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f0f0e; --bg2:#161614; --bg3:#1d1d1a;
+  --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.14);
+  --text:#f2f1ec; --muted:#a8a69e; --faint:#6f6e68;
+  --orange:#fb6b23; --orange-dim:rgba(251,107,35,.14);
+  --lav:#ab9ff2; --green:#6dbe8c;
+  --font:'Manrope',system-ui,sans-serif; --mono:'Geist Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.6;-webkit-font-smoothing:antialiased}
+.site{max-width:1080px;margin:0 auto;padding:0 24px}
+nav{position:sticky;top:0;z-index:50;background:rgba(15,15,14,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:28px}
+.nav-logo{color:var(--text);text-decoration:none;font-weight:700;font-size:15px;margin-right:auto}
+.nav-links{display:flex;gap:22px}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14px}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{color:var(--bg);background:var(--text);text-decoration:none;font-size:14px;font-weight:600;padding:8px 16px;border-radius:100px}
+.case-hero{padding:56px 0 8px}
+.back-link{color:var(--muted);text-decoration:none;font-size:14px}
+.back-link:hover{color:var(--text)}
+.read-time{font-size:13px;color:var(--faint);margin-top:20px}
+.case-tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--orange);margin-top:8px}
+.case-title{font-size:clamp(32px,5vw,52px);line-height:1.08;letter-spacing:-.02em;font-weight:800;margin-top:16px}
+.case-subtitle{color:var(--muted);font-size:17px;max-width:720px;margin-top:18px}
+.meta-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border2);margin-top:32px}
+.meta-item{background:var(--bg);padding:18px 20px}
+.meta-item--wide{grid-column:span 4;border-top:1px solid var(--border);display:flex;gap:16px;align-items:center}
+.meta-label{font-size:10px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:6px}
+.meta-val{font-size:14px;font-weight:600}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.meta-pill{font-size:12px;font-weight:500;border:1px solid var(--border2);border-radius:100px;padding:3px 12px;color:var(--muted)}
+.section{padding:72px 0 0}
+.section-label{font-size:13px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:20px}
+.prose{font-size:16px;color:var(--muted);max-width:760px}
+.prose strong{color:var(--text)}
+.case-img-wrap{border:1px solid var(--border2);overflow:hidden;background:var(--bg2)}
+.case-img{width:100%;display:block}
+.img-row{display:grid;gap:12px;margin-top:12px}
+.img-row.cols-2{grid-template-columns:1fr 1fr}
+.img-cap{font-size:12px;color:var(--faint);margin-top:8px}
+.flow-strip{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(230px,290px);gap:12px;overflow-x:auto;margin-top:12px;padding-bottom:10px;scroll-snap-type:x mandatory}
+.flow-item{scroll-snap-align:start}
+.flow-item .img-cap{white-space:normal}
+.challenge-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border2);margin-top:28px}
+.challenge-item{background:var(--bg);padding:26px 24px}
+.challenge-num{font-size:10px;font-family:var(--mono);color:var(--orange);letter-spacing:.08em;margin-bottom:8px}
+.challenge-title{font-size:17px;font-weight:700;margin-bottom:8px}
+.challenge-desc{font-size:14px;color:var(--muted)}
+.outcomes{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border2);margin-top:28px}
+.outcome-item{background:var(--bg);padding:28px 24px}
+.outcome-val{font-size:44px;font-weight:800;color:var(--orange);line-height:1}
+.outcome-desc{font-size:14px;font-weight:600;margin-top:12px}
+.outcome-note{font-size:12px;color:var(--faint);margin-top:6px}
+.process-steps{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border2);margin-top:28px}
+.process-step{display:grid;grid-template-columns:48px 1fr;background:var(--bg)}
+.step-num{font-size:11px;font-family:var(--mono);color:var(--orange);padding:20px 0 20px 20px}
+.step-body{padding:20px 20px 20px 0}
+.step-title{font-size:14px;font-weight:600;margin-bottom:4px}
+.step-desc{font-size:13px;color:var(--muted)}
+.rail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border2);margin-top:28px}
+.rail{background:var(--bg);padding:22px 20px}
+.rail-name{font-size:15px;font-weight:700}
+.rail-detail{font-size:13px;color:var(--muted);margin-top:4px}
+.rail-tag{display:inline-block;font-size:10px;font-family:var(--mono);color:var(--lav);text-transform:uppercase;letter-spacing:.06em;margin-top:10px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border2);margin-top:28px}
+.split-col{background:var(--bg);padding:26px 24px}
+.split-col h3{font-size:15px;margin-bottom:12px}
+.split-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.split-col li{font-size:13.5px;color:var(--muted);padding-left:18px;position:relative}
+.split-col li::before{content:"—";position:absolute;left:0;color:var(--faint)}
+.demo-box{border:1px solid var(--border2);background:var(--bg2);margin-top:28px;padding:32px;text-align:center}
+.demo-box p{color:var(--muted);font-size:14px;max-width:560px;margin:0 auto}
+.btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.btn{display:inline-block;text-decoration:none;font-weight:700;font-size:15px;padding:13px 26px;border-radius:100px}
+.btn-primary{background:var(--lav);color:#0a0a0c}
+.btn-ghost{border:1px solid var(--border2);color:var(--text)}
+.hire-box{border:1px solid var(--border2);margin-top:28px;padding:32px;background:var(--bg2)}
+.hire-box h3{font-size:18px;margin-bottom:10px}
+.hire-box p{font-size:14px;color:var(--muted)}
+.credits{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:28px}
+.credit-label{font-size:10px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:6px}
+.credit-val{font-size:14px}
+.next-case{border-top:1px solid var(--border);margin-top:72px;padding:40px 0}
+.next-case a{color:var(--text);text-decoration:none}
+.next-case .nt-tag{font-size:11px;font-family:var(--mono);color:var(--orange);letter-spacing:.08em}
+.next-case h3{font-size:24px;margin-top:8px}
+footer{border-top:1px solid var(--border);padding:28px 0 48px;color:var(--faint);font-size:13px}
+footer .site{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+footer a{color:var(--muted);text-decoration:none;margin-left:16px}
+@media(max-width:768px){
+  .meta-strip{grid-template-columns:1fr 1fr}
+  .meta-item--wide{grid-column:span 2;flex-direction:column;align-items:flex-start}
+  .challenge-grid,.outcomes,.rail-grid,.split{grid-template-columns:1fr}
+  .img-row.cols-2{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .credits{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="https://antonyui.com/" class="nav-logo">Anton Bozhatarnyk</a>
+    <div class="nav-links">
+      <a href="https://antonyui.com/work/">Work</a>
+      <a href="https://antonyui.com/#expertise">Expertise</a>
+      <a href="https://antonyui.com/about/">About</a>
+      <a href="https://antonyui.com/blog/">Blog</a>
+    </div>
+    <a href="mailto:designantonyui@gmail.com?subject=Product%20role%20(via%20antonyui.com)" class="nav-cta">Let's talk →</a>
+  </div>
+</nav>
+
+<main class="case-hero" id="main">
+  <div class="site">
+    <a href="https://antonyui.com/work/" class="back-link">← Back to work</a>
+    <div class="read-time">⏱ 4 min read</div>
+    <div class="case-tag">CASE STUDY · POLISH-LICENSED IGAMING / FINTECH · 2026</div>
+    <h1 class="case-title">Cashier — zero friction for players.<br>Full compliance for money.</h1>
+    <p class="case-subtitle">A clickable iGaming cashier designed for Poland’s regulated market (Ministerstwo Finansów / Ustawa hazardowa): PLN-only deposits across BLIK (2:00 timer + 1-Click), Przelewy24, Cards, Apple/Google Pay, and PayPal — paired with KYC/PESEL gating, active bonus locks, daily deposit limits, and verified PL IBAN payouts via Express Elixir.</p>
+
+    <div class="meta-strip">
+      <div class="meta-item"><div class="meta-label">Project</div><div class="meta-val">Cashier widget</div></div>
+      <div class="meta-item"><div class="meta-label">Market</div><div class="meta-val">Poland · MF-Licensed · PLN</div></div>
+      <div class="meta-item"><div class="meta-label">Duration</div><div class="meta-val">2 weeks · 2026</div></div>
+      <div class="meta-item"><div class="meta-label">Role</div><div class="meta-val">Product Design + Build</div></div>
+      <div class="meta-item meta-item--wide"><div class="meta-label">Scope</div>
+        <div class="meta-val pills"><span class="meta-pill">Product Design</span><span class="meta-pill">Polish iGaming Compliance</span><span class="meta-pill">Design System (Figma + React)</span><span class="meta-pill">Storybook</span><span class="meta-pill">Local PL Payments</span></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="section" style="padding-top:0;">
+  <div class="site">
+    <h2 class="section-label">My Role</h2>
+    <p class="prose"><strong>Solo Product Designer + Design Engineer.</strong> I owned the end-to-end UX architecture, Polish regulatory compliance rules (<em>Ustawa hazardowa</em>), Figma token/component system (Light &amp; Dark modes), interactive React + Storybook prototype, and all deposit, withdrawal, KYC, and bonus-lock edge cases.</p>
+  </div>
+</div>
+
+<div class="site" style="padding-top:40px;">
+  <div class="flow-strip">
+    <div class="flow-item"><div class="case-img-wrap"><img class="case-img" src="cashier-case-study/shot-home.png" alt="Cashier home — Deposit / Withdraw tabs with BLIK, Przelewy24, Card and Recommended for Poland badge"></div><div class="img-cap">① Home: PLN-only, local rails.</div></div>
+    <div class="flow-item"><div class="case-img-wrap"><img class="case-img" src="cashier-case-study/shot-p24.png" alt="Przelewy24 deposit — serif amount, bank choice, 0% fee receipt"></div><div class="img-cap">② P24: bank list, 0% fee receipt.</div></div>
+    <div class="flow-item"><div class="case-img-wrap"><img class="case-img" src="cashier-case-study/shot-blik.png" alt="BLIK deposit — 6-digit code entry, 2:00 timer, 1-Click opt-in"></div><div class="img-cap">③ BLIK: 6-digit code + 1-Click opt-in.</div></div>
+    <div class="flow-item"><div class="case-img-wrap"><img class="case-img" src="cashier-case-study/shot-card.png" alt="Card deposit — Luhn validation and 3D Secure confirmation"></div><div class="img-cap">④ Card: Luhn + 3D Secure SCA.</div></div>
+  </div>
+  <div class="img-cap">Deposit flow, left to right — scroll →</div>
+</div>
+
+<div class="section">
+  <div class="site">
+    <h2 class="section-label">01 · Context</h2>
+    <p class="prose"><strong>Polish-licensed iGaming has strict rules that generic cashiers get wrong.</strong> Under Poland’s <em>Ustawa hazardowa</em>, licensed operators (like STS, Fortuna, or Superbet) must operate strictly in <strong>PLN</strong>, exclude crypto and anonymous vouchers, charge <strong>0% cashier fees</strong>, enforce daily responsible-gaming limits, verify <strong>ID + PESEL</strong> before any payout, and route withdrawals exclusively to the player’s own verified <strong>Polish bank account (PL IBAN)</strong>. I designed a cashier that respects every legal constraint without feeling like paperwork.</p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="site">
+    <h2 class="section-label">02 · The Problem</h2>
+    <p class="prose">The initial prototype looked international, missed Polish regulatory rules, and broke user trust around fees and payouts.</p>
+    <div class="challenge-grid">
+      <div class="challenge-item"><div class="challenge-num">PROBLEM 01</div><h3 class="challenge-title">Unlawful / unrealistic rails &amp; fees</h3><div class="challenge-desc">Crypto, Skrill/Neteller, Paysafecard, and 2–3% player deposit fees were included—none of which match Polish-licensed operators where deposits and withdrawals are 0% fee in PLN.</div></div>
+      <div class="challenge-item"><div class="challenge-num">PROBLEM 02</div><h3 class="challenge-title">Missing KYC &amp; PL IBAN withdrawal gate</h3><div class="challenge-desc">Players could withdraw to arbitrary new card numbers without PESEL/ID verification or closed-loop Polish IBAN ownership matching.</div></div>
+      <div class="challenge-item"><div class="challenge-num">PROBLEM 03</div><h3 class="challenge-title">Disconnected bonus &amp; RG limits</h3><div class="challenge-desc">Active 35× bonus wagering wasn’t surfaced before withdrawal, and statutory daily deposit limits (Art. 15f) weren’t enforced at amount entry.</div></div>
+      <div class="challenge-item"><div class="challenge-num">PROBLEM 04</div><h3 class="challenge-title">Incomplete BLIK &amp; SCA edge cases</h3><div class="challenge-desc">BLIK lacked its 2-minute code expiry countdown and 1-Click returning-player opt-in, while cards lacked 3D Secure confirmation context.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="site">
+    <h2 class="section-label">03 · Outcomes</h2>
+    <p class="prose" style="margin-bottom:32px;">A complete Polish-licensed cashier system — synced between React/Storybook and a tokenized Figma Design System.</p>
+    <div class="outcomes">
+      <div class="outcome-item"><div class="outcome-val">7</div><div class="outcome-desc">Compliant PLN payment rails</div><div class="outcome-note">BLIK · Przelewy24 · Visa/Mastercard (3DS2) · Apple Pay · Google Pay · PayPal · Express Elixir / Elixir</div></div>
+      <div class="outcome-item"><div class="outcome-val">0%</div><div class="outcome-desc">Player cashier fees</div><div class="outcome-note">Clear separation from the 12% Polish gaming tax (which applies to sportsbook stakes, not transfers)</div></div>
+      <div class="outcome-item"><div class="outcome-val">8+</div><div class="outcome-desc">Synced Figma &amp; React flows</div><div class="outcome-note">BLIK 2:00 timer + 1-Click, P24 bank list, RG daily limits, KYC/PESEL gate, bonus lock, Express Elixir</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="site">
+    <h2 class="section-label">04 · Interactive Prototype</h2>
+    <p class="prose">Test the Polish-licensed rules directly: BLIK 2-minute confirmation, Przelewy24 bank routing, daily deposit limits, KYC gating, and Express Elixir withdrawals.</p>
+    <div class="demo-box">
+      <p><strong style="color:var(--text)">Deposit 100 PLN with BLIK → success.</strong> Enter <span style="font-family:var(--mono);">000000</span> for a declined state or <span style="font-family:var(--mono);">111111</span> for a delayed check. Then switch to Withdraw to test Express Elixir payouts to a verified PL IBAN.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="http://127.0.0.1:5173/" target="_blank" rel="noopener">Open live prototype →</a>
+        <a class="btn btn-ghost" href="http://127.0.0.1:6006/" target="_blank" rel="noopener">Open Storybook</a>
+      </div>
+      <p style="margin-top:16px;font-size:12px;">Interactive React + Figma system — simulated PSP responses, no real money moves.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="site">
+    <h2 class="section-label">05 · Polish-Licensed Rails &amp; Limits</h2>
+    <p class="prose">Every rail uses realistic Polish PLN limits, <span style="font-family:var(--mono);font-size:14px;">pl-PL</span> formatting (<span style="font-family:var(--mono);font-size:14px;">50,00 PLN</span>), and 0% player fees.</p>
+    <div class="rail-grid">
+      <div class="rail"><div class="rail-name">BLIK</div><div class="rail-detail">10–10 000 PLN · 0% fee · 6-digit code (2:00 countdown) + BLIK 1-Click opt-in</div><div class="rail-tag">Popular · #1</div></div>
+      <div class="rail"><div class="rail-name">Przelewy24</div><div class="rail-detail">20–50 000 PLN · 0% fee · Pay-by-Link across 10 Polish banks (PKO, Pekao, mBank, ING…)</div><div class="rail-tag">Popular · #2</div></div>
+      <div class="rail"><div class="rail-name">Visa / Mastercard</div><div class="rail-detail">20–20 000 PLN · 0% fee · Luhn validation + PSD2 3D Secure banking app prompt</div><div class="rail-tag">Popular · #3</div></div>
+      <div class="rail"><div class="rail-name">Apple Pay · Google Pay · PayPal</div><div class="rail-detail">20–10 000 PLN · 0% fee · Deposit-only; payouts route to verified PL IBAN</div><div class="rail-tag">Digital Wallets</div></div>
+      <div class="rail"><div class="rail-name">Express Elixir</div><div class="rail-detail">10–50 000 PLN · 0% fee · Minutes to 1 hour · Verified 28-char PL IBAN</div><div class="rail-tag">Withdrawal · Instant</div></div>
+      <div class="rail"><div class="rail-name">Standard Elixir</div><div class="rail-detail">10–100 000 PLN · 0% fee · 1–2 business days · High-value payouts</div><div class="rail-tag">Withdrawal · Bank</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="site">
+    <h2 class="section-label">06 · Fast / Careful</h2>
+    <p class="prose">Zero friction where conversion happens. Deliberate friction where Polish law and money safety require it.</p>
+    <div class="split">
+      <div class="split-col"><h3>Fast ⚡</h3><ul><li>PLN-only without clutter or hidden Crypto tabs</li><li>Quick presets (50 / 100 / 250 / 500 PLN) + 1-tap repeat</li><li>Remember for BLIK 1-Click returning UX</li><li>Instant Express Elixir payouts (0% fee)</li><li>Back to game from any pending state</li></ul></div>
+      <div class="split-col"><h3>Careful 🔒</h3><ul><li>Mandatory ID + PESEL gate before first withdrawal</li><li>Strict 28-char PL IBAN validation (closed-loop AML)</li><li>Active bonus wagering &amp; forfeit warning on Withdraw</li><li>Daily responsible-gaming deposit limit enforcement</li><li>BLIK 2:00 timer + “Nothing was charged” on failure</li></ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="site">
+    <h2 class="section-label">07 · States, not just screens</h2>
+    <p class="prose">Every money state is designed — pending, delayed, failed, canceled, expired — each saying plainly whether anything moved.</p>
+    <div class="flow-strip">
+      <div class="flow-item"><div class="case-img-wrap"><img class="case-img" src="cashier-case-study/shot-topup.png" alt="In-game top-up with close button, quick amounts and back to game"></div><div class="img-cap">① Top-up: X + Back to game.</div></div>
+      <div class="flow-item"><div class="case-img-wrap"><img class="case-img" src="cashier-case-study/shot-topup-success.png" alt="Top-up success with new balance and receipt"></div><div class="img-cap">② Paid: toast + new balance.</div></div>
+      <div class="flow-item"><div class="case-img-wrap"><img class="case-img" src="cashier-case-study/shot-withdraw-home.png" alt="Withdrawal methods routed to verified Polish bank account (PL IBAN)"></div><div class="img-cap">③ Withdraw: verified PL IBAN rails.</div></div>
+      <div class="flow-item"><div class="case-img-wrap"><img class="case-img" src="cashier-case-study/shot-withdraw-success.png" alt="Withdrawal success with timeline, receipt and back to game"></div><div class="img-cap">④ Out: timeline + receipt.</div></div>
+      <div class="flow-item"><div class="case-img-wrap"><img class="case-img" src="cashier-case-study/shot-history.png" alt="Transaction history using pending action queue and borderless monthly ledger"></div><div class="img-cap">⑤ History: borderless ledger.</div></div>
+      <div class="flow-item"><div class="case-img-wrap"><img class="case-img" src="cashier-case-study/shot-withdraw-empty.png" alt="Empty withdrawal state with primary Deposit action"></div><div class="img-cap">⑥ Empty: Deposit resolves it.</div></div>
+    </div>
+    <div class="img-cap">Money out + mid-session loop — scroll →</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="site">
+    <h2 class="section-label">Hire Me</h2>
+    <div class="hire-box">
+      <h3>Product Designer roles in fintech, payments, or iGaming.</h3>
+      <p>Product Strategy · Design Systems (Figma + React) · Storybook · Regulated PL payments (BLIK, P24, Express Elixir, KYC/AML). Poland · open to EU remote &amp; relocation.</p>
+      <div class="btn-row" style="justify-content:flex-start;margin-top:20px;">
+        <a class="btn btn-primary" href="mailto:designantonyui@gmail.com?subject=Product%20Designer%20role%20(via%20antonyui.com)">Let's talk →</a>
+        <a class="btn btn-ghost" href="https://antonyui.com/assets/Anton-Bozhatarnyk-CV.pdf">Download CV</a>
+      </div>
+    </div>
+    <div class="credits">
+      <div><div class="credit-label">Role</div><div class="credit-val">Product Design + Build, solo</div></div>
+      <div><div class="credit-label">Stack</div><div class="credit-val">Figma DS · React · Vite · Tailwind · Storybook</div></div>
+      <div><div class="credit-label">Scope</div><div class="credit-val">UX/UI · Compliance Logic · Design System · Prototype</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="next-case"><div class="site">
+  <div class="nt-tag">NEXT CASE · B2B SAAS</div>
+  <h3><a href="https://antonyui.com/work/">Pharos — Freight Exchange Platform →</a></h3>
+</div></div>
+
+<footer><div class="site">
+  <span>© 2026 · Anton Bozhatarnyk · Prototype — illustrative data only, never send funds</span>
+  <span><a href="mailto:designantonyui@gmail.com">Email</a><a href="https://www.linkedin.com/in/antony-bozhatarnyk-b6068441/">LinkedIn</a></span>
+</div></footer>
+
+</body>
+</html>
